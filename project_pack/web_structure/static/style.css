@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+ol,ul{
+    list-style: none;
+
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    background-color:#3b3f41 ;
+}
+
+.container {
+    position : relative;
+    max-width:340px;
+    width : 100%;
+    background-color: silver;
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow:0 0 5px #aeaeae;
+    overflow: hidden; 
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    
+}
+.container::before{
+    content: '';
+    position: absolute;
+    width : 600px;
+    height: 600px;
+    background: linear-gradient(azure ,#b9f2ff,bisque );
+    animation: rotate 4s linear infinite;
+    
+}
+
+.container::after{
+    content: '';
+    position: absolute;
+    background-color: silver;
+    inset: 5px;
+    border-radius: 30px;
+    
+}
+
+@keyframes rotate{
+    form{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.container header {
+    font-size: large;
+    color: #242424;
+    font-weight: 500;
+    text-align: center;
+    text-decoration:underline;
+    text-decoration-color: #191919 ;
+    height: 20px;
+    
+}
+
+.container .form{
+    margin-top: 20px;
+    z-index: 2;
+   
+}
+
+.form .input_box{
+    width : 100%;
+    margin-top: 10px;
+}
+
+.input_box label {
+    color:#202020;
+}
+
+.form .input_box input{
+    position: relative;
+    height: 25px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #aeaeae;
+    border-radius: 10px;
+    padding:0 10px;
+    font-size: 1rem;
+    background-color: #FBE4D8;
+    margin-top: 2px;
+
+}
+
+.form .input_box input:hover{
+    border-color: aliceblue;
+}
+.form .input_box input:focus{
+    border-color: aliceblue;
+    border-width: 2px;
+}
+
+
+.form .button{
+    justify-content: center;
+    display: flex;
+}
+
+.form .button input{
+    border:2px solid whitesmoke;
+    width: 50%;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 400px;
+    margin-top: 10px;  
+    background-color: #aeaeae;
+       
+}
+
+.form .button input:hover{
+    background-color: azure ;
+    
+}
+
+.form .button input:active{
+    transform: scale(0.9);
+}
+
+.form .file_select {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display:flex;
+    
+}
+
+.form .file_select label{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #aeaeae;
+    width: 50%;
+    height: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid whitesmoke;
+}
+
+.form .file_select label:hover{
+    background-color: azure;
+
+}
+
+.form .file_select input[type='file']{
+    display:none;
+}
+
+.form .file_select label:active{
+    transform: scale(0.9);
+}

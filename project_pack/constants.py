@@ -13,7 +13,7 @@ USER = "root"
 
 # parola user-ului
 if os.getlogin() == 'danut' :   
-    with open('psw.txt', 'r') as pswFile:
+    with open(r'C:\Users\danut\Desktop\pythonProject1\psw.txt', 'r') as pswFile:
         PASSWORD = pswFile.readline()
 else:
     #❗️ Aici introduci tu parola ta❗️
@@ -40,3 +40,7 @@ ABSOLUTE_PATH_INTRARI = r"C:\Users\danut\Desktop\pythonProject1\proiect_final\in
 # calea de backup se deduce automat din calea de intrari
 # adica iau calea de intrari pana la ultima aparitie a caracterului '\' si adaug 'backup_intrari' la acel string 
 ABSOLUTE_PATH_BACKUP_INTRARI = ABSOLUTE_PATH_INTRARI[ : ABSOLUTE_PATH_INTRARI.rindex('\\') + 1] + 'backup_intrari'
+# voi lua adresele de mail si cheia de acces din fisierul gmails_project.txt
+with open("proiect_final\gmails_project.txt",'r') as mails:
+    content = mails.readlines()
+    sender, mail_password, receiver = (content[i].replace("\n",'') for i in range(0,3))

@@ -1,57 +1,13 @@
-from constants import * 
-import mysql.connector
-import os,time,sys,csv,datetime
+import os,time,csv,datetime
+import smtplib ,ssl 
+from project_pack import *
 
-class ConnectionToDatabase():
-    """Cu ajutorl acestei clase instantiem conexiunea cu baza de date"""
+from smtplib import SMTPAuthenticationError as LoginError
 
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super().__new__(cls)
-        return cls.instance
-    
-    def __init__(self):
-        self.mydb = mysql.connector.connect(
-            user = USER,
-            host = HOST,
-            password = PASSWORD,
-            database = DATABASE
-        )
-        self.mycursor = self.mydb.cursor()
-    
-    def execute_insert_query(self, query):
-        self.mycursor.execute(query)
-        self.mydb.commit()
-        
-    def execute_select_query(self, query):
-        self.mycursor.execute(query)
-        return self.mycursor.fetchall()
-    
-    def execute_update_query(self, query):
-        self.execute_insert_query(query)
-    
-    def __repr__(self) :
-        return f"Sunt o conexiune la baza de date {DATABASE} la adresa {hex(id(self))} !"
-
-class Person():
-    def __init__(self,nume,prenume,companie,id_manager,Email):
-        self.nume = nume
-        self.prenume = prenume
-        self.companie = companie
-        self.id_manager = id_manager
-        self.Email = Email
-     
-    
 myconnection = ConnectionToDatabase()
 
 # comenzile prin sys.argv : sys.argv[2] 
- 
-def date_to_sql_format(date: str) -> str:
-    """Transforma data din fisiere sub o forma accepatata de sql."""
-    sql_date = date.replace("T"," ")
-    sql_date = sql_date[:-5]     
-    return sql_date
-            
+             
 def add_to_database(file: str, connection: ConnectionToDatabase):
     """Adauga informatiile dintr-un fisier csv sau txt in baza de date."""
     # din stringul file se ia doar ce se afla dupa caracterul'.' adica tipul fisierului 
@@ -82,32 +38,59 @@ def add_to_database(file: str, connection: ConnectionToDatabase):
                     new_query = f"insert into acces values(null,{line[0]}, '{date_to_sql_format(line[1])}', '{line[2]}', {gate})"
                     connection.execute_insert_query(new_query)
 
-def calcul_ore_lucrate(connection : ConnectionToDatabase):
+def raport_ore_lucrate(connection : ConnectionToDatabase):
+    """Aceasta functie ne ajuta sa calculam numarul de ore lucrate de fiecare angajat si\\
+    sa trimitem un mail managerului sau in cazul in care a lucrat mai putin de 8 ore."""
     ids_persoane = connection.execute_select_query("select Id from persoane")
     data_de_lucru = '2023-05-21'#datetime.datetime.now().strftime("%Y-%m-%d")
-    print(data_de_lucru)
-    print(ids_persoane)
+
     for id_persoana in ids_persoane:
         id_persoana = id_persoana[0]
         date_persoana = myconnection.execute_select_query(f"select * from persoane where id = {id_persoana}")[0]
-        print(date_persoana)
-        #this_person = Person()
+        #Creez un obiect de tip Person
+        this_person = Person(date_persoana[0],date_persoana[1],date_persoana[2],date_persoana[3],date_persoana[4],date_persoana[5])
+        #selectez din baza de date doar data de azi
         table_today = f"select * from acces where Data like '%{data_de_lucru}%' "
-        query_in = f"select * from ({table_today}) as today where Id_Persoana = {id_persoana} and Sens = 'in' "
+        #selectez toate intrarile persoanei si le ordonez crescator dupa ora apoi selectez prima ora la care a intrat pe o poarta
+        query_in = f"select * from ({table_today}) as today where Id_Persoana = {id_persoana} and Sens = 'in' order by Data ASC"
         persoana_first_entry = myconnection.execute_select_query(query_in)[0][2]
-        query_out = f"select * from ({table_today}) as today where Id_Persoana = {id_persoana} and Sens = 'out' "
+        #selectez toate iesirile persoanei si le ordonez crescator dupa ora apoi selectez ultima ora la care a iesit pe o poarta
+        query_out = f"select * from ({table_today}) as today where Id_Persoana = {id_persoana} and Sens = 'out' order by Data ASC"
         persoana_last_exit = myconnection.execute_select_query(query_out)[-1][2]
         
         timp_la_lucru = str(persoana_last_exit - persoana_first_entry)
-        print(timp_la_lucru)
         ore_lucrate = int(timp_la_lucru[0 : timp_la_lucru.index(":") ])
     
-        
         if ore_lucrate < 8:
-            print("CHIULANGIU")
-        
-    
-  
+            send_mail(this_person,ore_lucrate)
+            
+
+def send_mail(person : Person ,numar_ore : int):
+    subject = 'Raport chiulangiu'
+    body = f'Angajatul {person.nume} {person.prenume} cu id-ul {person.id} apartinand de managerul cu id-ul {person.id_manager} a lucrat doar {numar_ore} ore!!!'
+
+    message = f"""
+            From: {sender}
+            To: {receiver}
+            Subject: {subject}\n
+            {body}
+            """
+
+    context = ssl.create_default_context()
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+
+    server.starttls(context = context)
+
+    try:
+        server.login(sender, mail_password)
+        print("Logged in...")
+        server.sendmail(sender, receiver, message)
+        print("Mail sent successfully!")
+        server.quit()
+    except LoginError as e:
+        print(e)
+        print("Ceva nu a mers bine")
+         
 def update():
     """Verifica in fiecare secunda daca s-au adaugat fisiere noi in directorul dat.
     La ora 20:00:00 se face calculul de ore pe ziua respectiva.
@@ -137,16 +120,16 @@ def update():
             lista = lista_noua
             print(lista)
         time.sleep(1)
+        
         current_time = datetime.datetime.now().strftime("%H:%M:%S")
-        if current_time == ORA_UPDATE:
-            calcul_ore_lucrate(myconnection)
+        if current_time == "21:42:10":
+            raport_ore_lucrate(myconnection)
+        
+        onilne_app_flask_run()
             
-
         time.sleep(1)
-# add_to_database("proiect_final\intrari\Poarta1.txt",myconnection)
-# add_to_database("proiect_final\intrari\Poarta2.csv",myconnection)
+        print("mere")
 
-# print(date_to_sql_format('2023-05-22T14:23:42.153Z'))
 if __name__ == '__main__':
-    calcul_ore_lucrate(myconnection)      
-
+    update()
+   
