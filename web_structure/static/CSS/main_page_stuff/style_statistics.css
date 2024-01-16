@@ -1,0 +1,22 @@
+.color{
+    padding: 5px 15px;
+    color: white;
+}
+.color :nth-child(1){
+    color:white
+}
+.color :nth-child(2){
+    color:#FFD700
+}
+.color :nth-child(3){
+    color:silver
+}
+.color :nth-child(4){
+    color:#CD7F32;
+}
+.color {
+    display: flex;
+}
+.color h2{
+    margin: 5px 10px;
+}

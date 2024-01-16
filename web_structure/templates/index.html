@@ -5,26 +5,36 @@
         <meta charset="UTF-8">
         <title>Pagina Principala</title>
         
-        <!-- <link href="{{url_for('static', filename = 'CSS/style_home.css')}}" rel="stylesheet"> -->
-    
-        <link href="../static/CSS/style_form.css" rel="stylesheet">
-        <link href="../static/CSS/style_home.css" rel="stylesheet">
+        <link href="{{url_for('static', filename = 'CSS/main_page_stuff/style_main_page.css')}}" rel="stylesheet"> 
+        <link href="../static/CSS/main_page_stuff/style_main_page.css" rel="stylesheet">
+        
     </head>
 
-    <body>
+    <body >
         <header>
             <div class="container">
                 <div class="row">
                     <div class="col div_box">
                         
                         <div class="box">
-                            <a href="#home">HOME </a>
+                            <a href="#top">HOME </a>
                         </div>
                         <div class="box">
                             <a href="#formular">FORMULAR </a>
                         </div>
                         <div class="box">
                             <a href="#statistici">STATISTICI </a>
+                        </div>
+                        <div class="user_box" id = "user_box">
+                            
+                            <div class="log_out_button" id="log_out_button">
+                                <a href="/">LOG OUT</a> 
+                            </div>
+                            
+                            <div class="user_icon" id = "user_icon">
+
+                            </div>
+                            
                         </div>
 
                     </div>
@@ -33,12 +43,12 @@
         </header>
         
         <div class="container_fluid">
-            <div class="container" id="home">
+            <div class="container">
                 <div class="row">
-                    <div class="col">
+                    <div class="col color_except_text">
                         
-                        <h2> Aceasta este pagina unde am facut partea de web pentru aplicatia din python</h2>
-                        <p>Aici se pot observa cateva imagini din proiectul de baza </p>
+                        <h2 class="color"> Aceasta este pagina unde am facut partea de web pentru aplicatia din python</h2>
+                        <p class="color">Aici se pot observa cateva imagini din proiectul de baza </p>
                         
                     </div>
                     <div class="col">
@@ -68,47 +78,69 @@
         </div>
         
         <div class="container_fluid" id="formular">
-            <div class="container_form">
-                <form action="" method ="post" class="form" enctype="multipart/form-data"> 
-                    <div class="title">Adaugare Persoana</div>
-                    <div class="input_box">
-                        <label>Nume</label>
-                        <input name ="Nume" type="text" placeholder="Nume" > 
-                    </div>
-                    <div class="input_box">
-                        <label>Prenume</label>
-                        <input name ="Prenume" type="text" placeholder="Prenume" > 
-                    </div>
-                    <div class="input_box">
-                        <label>Companie</label>
-                        <input name ="Companie" type="text" placeholder="Companie" > 
-                    </div>
-                    <div class="input_box">
-                        <label>Id manager</label>
-                        <input name ="Id_Manager" type="number" placeholder="Id manager " min="0"> 
-                    </div>
-                    <div class="input_box">
-                        <label>Email</label>
-                        <input name ="Email" type="email" placeholder="angajat@gmail.com" > 
-                    </div>
-                    <div class="file_select">
-                        <input type="file" name="Fisier" id="uploadbtn" accept="*.json">
-                        <label class="file_button" for="uploadbtn">Incarca un fisier</label>
-                        
-                    </div>
-                    <div class="button">
-                        <input type="submit" value="Trimite"> 
-                    </div>
-                </form>
-            </div>
+            <div class="row">
+                
+                <div class="container_form">
+                    <form method ="post" class="form" enctype="multipart/form-data"> 
+                        <div class="title">Adaugare Persoana</div>
+                        <div class="input_box">
+                            <label>Nume</label>
+                            <input name ="Nume" type="text" placeholder="Nume" > 
+                        </div>
+                        <div class="input_box">
+                            <label>Prenume</label>
+                            <input name ="Prenume" type="text" placeholder="Prenume" > 
+                        </div>
+                        <div class="input_box">
+                            <label>Companie</label>
+                            <input name ="Companie" type="text" placeholder="Companie" > 
+                        </div>
+                        <div class="input_box">
+                            <label>Id manager</label>
+                            <input name ="Id_Manager" type="number" placeholder="Id manager " min="0"> 
+                        </div>
+                        <div class="input_box">
+                            <label>Email</label>
+                            <input name ="Email" type="email" placeholder="angajat@gmail.com" > 
+                        </div>
+                        <div class="file_select">
+                            <input type="file" name="Fisier" id="uploadbtn" accept="*.json">
+                            <label class="file_button" for="uploadbtn">Incarca un fisier</label>
+                            
+                        </div>
+                        <div class="button">
+                            <input type="submit" value="Trimite"> 
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="row">
+                    <h2 class="color">Aici avem formularul pe care utiliztorul il va completa ca  <br>
+                         mai apoi datele sa fie trimise catre baza de date</h2>
+                </div>
+                
+            </div>        
         </div>
 
         <div class="container_fluid" id="statistici">
             <div class="container">
-                dasdasd
+                <div class="col color">
+                    <div><h2 c>Aici avem statisticile legate de angajati</h2>  </div>
+                </div>
+                <div class="col color">
+                    <h2>Top 3 cele mai comune nume :</h2> 
+                    {% for nume in stats['Nume']%}
+                        <h2>{{ nume }}</h2> 
+                    {% endfor %}
+                </div>
+                <div class="col color">
+                    <h2>Top 3 cele mai comune prenume :</h2> 
+                    {% for prenume in stats['Prenume']%}
+                        <h2>{{ prenume }}</h2> 
+                    {% endfor %}
+                </div>
             </div>
         </div>
-
-        
+        <script src="../static/JS/main_page.js" rel="script"></script>
     </body>
 </html>

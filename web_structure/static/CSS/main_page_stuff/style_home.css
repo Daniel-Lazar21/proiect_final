@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+
+ol,ul{
+    list-style: none;
+
+}
+body{
+    padding-top: 110px;
+    /* background-color:#aeaeae; */
+    background: url('../../imgs/background_img.jpg');
+
+}
+body img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+html{
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+}
+:root{
+    --size: 20%;
+    --neg_size: calc(var(--size)*(-1));
+}
+.container_fluid {
+    background-color: rgba(24,24,24,0.8);
+    backdrop-filter: blur(15px);
+    padding: 10px 10px;
+    margin: 40px ;
+    border: 5px solid whitesmoke;
+    border-radius: 50px;
+    transform: scale(0.9);
+}
+.container_fluid:hover{
+    backdrop-filter: blur(5px);
+    background-color: transparent;
+    transform: scale(1);
+    border-color: turquoise;
+    transition: 0.5s;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+
+}
+.row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.col {
+    flex: 1;
+    padding: 0 10px;
+    flex-wrap: wrap;
+    
+}
+
+
+.home img{
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 10%;
+    box-shadow: 0 0 10px white;
+}
+.home-1 img:hover {
+    transform: scale(1.5);
+    margin: var(--size) var(--neg_size) var(--neg_size) var(--size);
+    box-shadow: 0 0 5px skyblue;
+    transition: 0.5s;
+}
+.home-2 img:hover {
+
+    transform: scale(1.5);
+    margin: var(--size) var(--size) var(--neg_size) var(--neg_size);
+    box-shadow: 0 0 5px skyblue;
+    transition: 0.5s;
+}
+
+.home-3 img:hover {
+
+    transform: scale(1.5);
+    margin: var(--neg_size) var(--neg_size) var(--size) var(--size);
+    box-shadow: 0 0 5px skyblue;
+    transition: 0.5s;
+}
+
+.home-4 img:hover {
+    transform: scale(1.5);
+    margin: var(--neg_size) var(--size) var(--size) var(--neg_size);
+    box-shadow: 0 0 5px skyblue;
+    transition: 0.5s;
+}
+
+.div_box{
+    display: flex;
+}
+
+header {
+    width: 100%;
+    background-color: #222222;
+    border : 10px solid black;
+    padding: 10px;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index: 3;
+}
+
+.box{
+    height: 50px;
+    width: 150px;
+    margin: 5px 10px 5px;
+    display: flex;
+    border: 2px solid 	#cc1100;
+    background-color: #111111;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.box a{
+    color: #cc1100;
+    text-decoration: none;
+    padding: 10px;
+    justify-content: center;
+    
+}
+.box:hover {
+    border-color: #61ACC0;
+    transition: 1s ;
+    animation: animate_button 0.25s linear ;
+    
+}
+.box a:hover {
+    color: #61ACC0;
+    transition: 0.5s ;
+       
+}
+@keyframes animate_button {
+    0%{
+        transform: rotateZ(-1deg);
+    }
+    50%{
+        transform: rotateZ(1deg);
+    }
+    100%{
+        transform: rotateZ(0deg);
+    }
+    
+}
+
+.user_box{
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
+}
+.user_box .user_icon{
+    background-color: white;
+    width:60px;
+    height:60px;
+    border-radius: 50px;
+    border: 2px solid #cc1100;
+    margin: 0 5px;
+
+}
+.user_box .log_out_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    width:80px;
+    background-color: #111111;
+    border-radius: 5px;
+    border: 1px solid #cc1100;
+    margin: 0 5px;
+    cursor: pointer;
+    text-decoration: none;
+
+}
+.user_box .log_out_button a{
+    text-decoration: none;
+    color:#cc1100 ;
+
+}

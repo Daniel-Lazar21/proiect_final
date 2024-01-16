@@ -103,6 +103,17 @@ class ConnectionToDatabase():
             ore_lucrate = int(timp_la_lucru[0 : timp_la_lucru.index(":") ])
         
             if ore_lucrate < 8:
-                send_mail(this_person,ore_lucrate)    
+                send_mail(this_person,ore_lucrate)  
+    
+    def cele_mai_comune_nume_si_prenume(self):
+        query = "select Nume from (select Nume,count(*) as Total from persoane group by Nume) as this group by Nume order by Total desc" 
+        cele_mai_comune_nume = [self.execute_select_query(query)[i][0] for i in range(0,3)]
+        query = "select Prenume from (select Prenume,count(*) as Total from persoane group by Prenume) as this group by Prenume order by Total desc"
+        cele_mai_comune_prenume = [self.execute_select_query(query)[i][0] for i in range(0,3)]
+        
+        return {'Nume':cele_mai_comune_nume ,
+                'Prenume': cele_mai_comune_prenume}
+    #def   
     def __repr__(self) :
         return f"Sunt o conexiune la baza de date {DATABASE} la adresa {hex(id(self))} !"
+

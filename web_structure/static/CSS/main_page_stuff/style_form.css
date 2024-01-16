@@ -2,7 +2,7 @@
 .container_form {
     position: relative;
     width : 340px;
-    background-color: silver;
+    background-color: #202020;
     padding: 20px ;
     border-radius: 30px;
     box-shadow:0 0 5px white;
@@ -17,16 +17,16 @@
     content: '';
     position: absolute;
     width : 550px;
-    height: 600px;
-    background: linear-gradient(white,#202020,white,#202020,white);
-    animation: rotate 5s linear infinite;
+    height: 550px;
+    background: linear-gradient(#00ff00 ,turquoise ,#00ff00 ,turquoise,#00ff00 );
+    animation: rotate 10s linear infinite;
     
 }
 
 .container_form::after{
     content: '';
     position: absolute;
-    background-color: silver;
+    background-color: #202020;
     inset: 5px;
     border-radius: 30px;
     
@@ -43,10 +43,10 @@
 
 .container_form .title {
     font-size: large;
-    color: #242424;
+    color: white;
     font-weight: 500;
     text-align: center;
-    text-decoration:#191919 underline;
+    text-decoration:white underline;
     height: 20px;
     
 }
@@ -63,7 +63,7 @@
 }
 
 .container_form .input_box label {
-    color:#202020;
+    color:whitesmoke;
 }
 
 .container_form .form .input_box input{
@@ -71,7 +71,7 @@
     height: 25px;
     width: 100%;
     outline: none;
-    border: 1px solid #aeaeae;
+    border: 3px solid #00ff00;
     border-radius: 10px;
     padding:0 10px;
     font-size: 1rem;
@@ -81,10 +81,10 @@
 }
 
 .container_form .form .input_box input:hover{
-    border-color: aliceblue;
+    border-color: turquoise;
 }
 .container_form .form .input_box input:focus{
-    border-color: aliceblue;
+    border-color: turquoise;
     border-width: 3px;
 }
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request 
+from flask import Flask, render_template, request ,redirect
 from sys import path
 from json import JSONDecodeError
 #DE TINUT MINTE !!! daca nu poti importa pachete e posibil ca directorul in care lucrezi sa nu recunoasca path-ul directorului in care se afla
@@ -16,18 +16,40 @@ app = Flask(__name__)
 
 #am creat o functie cu ajutorul careia pot extrage date dintr un formular 
 def extract(html_var: str ,var_type = "") -> str:
-   if var_type =="file":
-      return request.files[html_var] if var_type =="file" else request.form[html_var]
-  
-@app.route('/')
-def home():
-   return render_template('index.html')
+   return request.files[html_var] if var_type =="file" else request.form[html_var]
+   
+def get_statistics_as_dict(connection:ConnectionToDatabase):
+   return myconnection.cele_mai_comune_nume_si_prenume()
 
-@app.route('/', methods=["GET", "POST"])     
+
+@app.route('/',methods=['GET','POST'])
+def login():
+   admins_info = myconnection.execute_select_query("Select * from admins")
+   print(admins_info)
+   info = " "
+   if request.method == "POST":
+      log_mail = extract('login_mail')
+      log_psw = extract('login_psw')
+      for admin in admins_info:
+         if log_mail != admin[1] or log_psw != admin[2]:
+            info = 'Mail or password incorrect!'
+         else:
+            return redirect('/stats')
+      print(log_mail,log_psw)
+      
+   return render_template('login_user.html',my_info = info)
+
+@app.route('/stats')
+def home():
+   _stats_ = get_statistics_as_dict(myconnection)
+   return render_template('index.html',stats = _stats_)
+
+@app.route('/stats', methods=["GET", "POST"])     
 def get_information():
    empty_value = False
    
    if request.method == "POST":
+      print(request.form)
       nume = extract('Nume')
       prenume = extract('Prenume')
       companie = extract('Companie')
@@ -65,9 +87,10 @@ def get_information():
       print("Ceva nu a mers bine")
    
    return home()
-   
+
 def onilne_flask_app():
    app.run(debug = True)
 
+# ai reusit cu log in acum organizeaza pe aici 
 onilne_flask_app() 
 # contionua cu requesturile pe flask si fa cumva sa bagi asta la tine in aplicatie ca o sa fie nevoie 

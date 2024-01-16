@@ -42,5 +42,5 @@ def non_online_app():
         
 
 if __name__ == '__main__':
-    non_online_app()
+    print(myconnection.cele_mai_comune_nume_si_prenume())
    

@@ -49,4 +49,3 @@ def send_mail(person : Person ,numar_ore : int):
     except LoginError as e:
         print(e)
         print("Ceva nu a mers bine")
-
