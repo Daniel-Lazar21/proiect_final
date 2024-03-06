@@ -18,7 +18,8 @@ h4{
     align-items: center;
 }
 body{
-    background-image: url('../imgs/login_background.jpg');
+    
+    background-image: url('../imgs/background_img.jpg');
     background-position: center;
     min-height: 100vh;
     justify-content: center;

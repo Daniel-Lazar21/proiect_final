@@ -3,11 +3,10 @@
 <html lang = "en">
     <head>
         <meta charset="UTF-8">
-        <title>Pagina Principala</title>
+        <title>Proiect Final</title>
         
         <link href="{{url_for('static', filename = 'CSS/main_page_stuff/style_main_page.css')}}" rel="stylesheet"> 
-        <link href="../static/CSS/main_page_stuff/style_main_page.css" rel="stylesheet">
-        
+     
     </head>
 
     <body >
@@ -47,27 +46,27 @@
                 <div class="row">
                     <div class="col color_except_text">
                         
-                        <h2 class="color"> Aceasta este pagina unde am facut partea de web pentru aplicatia din python</h2>
-                        <p class="color">Aici se pot observa cateva imagini din proiectul de baza </p>
+                        <h1 class="color">Aceasta pagina a fost creata folosind HTML,CSS,JS.</h1>
+                        <h2 class="color">Aici am pus cateva imagini cu codul de python al aplicatiei. </h2>
                         
                     </div>
                     <div class="col">
-                        <div class="row home" >
+                        <div class="row home">
                             <div class="col home-1">
-                                <img src="..\static\imgs\SSproiect2.png" alt="">
+                                <img src="{{url_for('static', filename = 'imgs/prj1.png')}}" alt="">
                                 
                             </div>
                             <div class="col home-2">
-                                <img src="..\static\imgs\SSproiect3.png" alt="">
+                                <img src="{{url_for('static', filename = 'imgs/prj2.png')}}" alt="">
                                 
                             </div>
                             <div class="row">
                                 <div class="col home-3">
-                                    <img src="..\static\imgs\SSproiect2.png" alt="">
+                                    <img src="{{url_for('static', filename = 'imgs/prj3.png')}}" alt="">
                                     
                                 </div>
                                 <div class="col home-4">
-                                    <img src="..\static\imgs\SSproiect3.png" alt="">
+                                    <img src="{{url_for('static', filename = 'imgs/prj4.png')}}" alt="">
                                     
                                 </div>
                             </div>
@@ -103,8 +102,11 @@
                             <label>Email</label>
                             <input name ="Email" type="email" placeholder="angajat@gmail.com" > 
                         </div>
+                        <div class="info_box" id="info_box">
+                            <h4>{{my_message}}</h4>
+                        </div>
                         <div class="file_select">
-                            <input type="file" name="Fisier" id="uploadbtn" accept="*.json">
+                            <input type="file" name="Fisier" id="uploadbtn" >
                             <label class="file_button" for="uploadbtn">Incarca un fisier</label>
                             
                         </div>
@@ -115,8 +117,11 @@
                 </div>
                 
                 <div class="row">
-                    <h2 class="color">Aici avem formularul pe care utiliztorul il va completa ca  <br>
-                         mai apoi datele sa fie trimise catre baza de date</h2>
+                    <h1 class="color">Aici avem formularul pe care utiliztorul il va completa ca mai apoi<br>
+                        datele sa fie trimise catre API si mai apoi sa fie stocate in baza de date.<br>
+                        Putem de asemenea sa incarcam un fisier de tip json care sa contina<br>
+                        una sau mai multe intrari pe poarta 3.
+                    </h1>
                 </div>
                 
             </div>        

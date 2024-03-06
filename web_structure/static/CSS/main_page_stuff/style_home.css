@@ -10,14 +10,14 @@ ol,ul{
 }
 body{
     padding-top: 110px;
-    /* background-color:#aeaeae; */
+    background-color:#aeaeae;
     background: url('../../imgs/background_img.jpg');
 
 }
 body img{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit:scale-down;
     
 }
 html{
@@ -29,20 +29,13 @@ html{
     --neg_size: calc(var(--size)*(-1));
 }
 .container_fluid {
-    background-color: rgba(24,24,24,0.8);
+    background-color: rgba(24,24,24,0.5);
     backdrop-filter: blur(15px);
     padding: 10px 10px;
     margin: 40px ;
     border: 5px solid whitesmoke;
     border-radius: 50px;
     transform: scale(0.9);
-}
-.container_fluid:hover{
-    backdrop-filter: blur(5px);
-    background-color: transparent;
-    transform: scale(1);
-    border-color: turquoise;
-    transition: 0.5s;
 }
 
 .container {
@@ -61,7 +54,6 @@ html{
     flex-wrap: wrap;
     
 }
-
 
 .home img{
     width: 100%;
@@ -112,7 +104,9 @@ header {
     left:0;
     right:0;
     z-index: 3;
+
 }
+
 
 .box{
     height: 50px;
@@ -124,33 +118,27 @@ header {
     border-radius: 20px;
     justify-content: center;
     align-items: center;
+    font-size: 25px;
     
 }
 
 .box a{
     color: #cc1100;
     text-decoration: none;
-    padding: 10px;
     justify-content: center;
     
 }
 .box:hover {
-    border-color: #61ACC0;
     transition: 1s ;
     animation: animate_button 0.25s linear ;
-    
 }
-.box a:hover {
-    color: #61ACC0;
-    transition: 0.5s ;
-       
-}
+
 @keyframes animate_button {
     0%{
-        transform: rotateZ(-1deg);
+        transform: rotateZ(-2deg);
     }
     50%{
-        transform: rotateZ(1deg);
+        transform: rotateZ(2deg);
     }
     100%{
         transform: rotateZ(0deg);
@@ -172,7 +160,8 @@ header {
     border-radius: 50px;
     border: 2px solid #cc1100;
     margin: 0 5px;
-
+    cursor: pointer;
+    z-index: 2;
 }
 .user_box .log_out_button{
     display: flex;
@@ -185,11 +174,18 @@ header {
     border: 1px solid #cc1100;
     margin: 0 5px;
     cursor: pointer;
-    text-decoration: none;
-
+    opacity: 0;
+    transform:translateX(70px);
 }
 .user_box .log_out_button a{
     text-decoration: none;
     color:#cc1100 ;
 
+}
+.info_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+    color: #ff0000;
 }

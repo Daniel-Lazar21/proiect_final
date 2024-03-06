@@ -9,6 +9,7 @@ path.append('c:\\Users\\danut\\Desktop\\pythonProject1\\proiect_final\\')
 #"proiect_final" care nu este recunoscut de sys(Terminal) iar eu ce fac adaug path-ul ca si argument in sys 
 from project_pack.constants import ABSOLUTE_PATH_BACKUP_INTRARI
 from project_pack.connection import *
+from project_pack.othertools import send_mail_log_in
 
 myconnection = ConnectionToDatabase()
 print(myconnection)
@@ -19,78 +20,76 @@ def extract(html_var: str ,var_type = "") -> str:
    return request.files[html_var] if var_type =="file" else request.form[html_var]
    
 def get_statistics_as_dict(connection:ConnectionToDatabase):
-   return myconnection.cele_mai_comune_nume_si_prenume()
-
+   return connection.cele_mai_comune_nume_si_prenume()
+   #se face ca dictionar tot ce tine de statistici
 
 @app.route('/',methods=['GET','POST'])
 def login():
    admins_info = myconnection.execute_select_query("Select * from admins")
-   print(admins_info)
    info = " "
    if request.method == "POST":
       log_mail = extract('login_mail')
       log_psw = extract('login_psw')
       for admin in admins_info:
          if log_mail != admin[1] or log_psw != admin[2]:
-            info = 'Mail or password incorrect!'
+            info = "Mail or password incorrect!"
          else:
+            send_mail_log_in(admin[1])
             return redirect('/stats')
-      print(log_mail,log_psw)
-      
+
    return render_template('login_user.html',my_info = info)
 
 @app.route('/stats')
-def home():
+def home(message=''):
    _stats_ = get_statistics_as_dict(myconnection)
-   return render_template('index.html',stats = _stats_)
+   return render_template('index.html',stats = _stats_,my_message = message)
 
-@app.route('/stats', methods=["GET", "POST"])     
+@app.route('/stats', methods=["POST"])     
 def get_information():
    empty_value = False
-   
-   if request.method == "POST":
-      print(request.form)
-      nume = extract('Nume')
-      prenume = extract('Prenume')
-      companie = extract('Companie')
-      
-      try:
-         id_manager = int(extract('Id_Manager'))
-      except (ValueError,TypeError):
-         id_manager = extract('Id_Manager')
-         
-      email = extract('Email')
-      sent_file = extract('Fisier','file')
+   message = ''
+
+   print(request.form)
+   nume = extract('Nume')
+   prenume = extract('Prenume')
+   companie = extract('Companie')
+   try:
+      id_manager = int(extract('Id_Manager'))
+   except (ValueError,TypeError):
+      id_manager = extract('Id_Manager')
+       
+   email = extract('Email')
+   sent_file = extract('Fisier','file')
    
    #verific daca in formular s-au trimis toate datele in mod corect altfel nu le ia in calcul   
    for info in (nume ,prenume ,companie ,id_manager ,email):
       if str(info).strip() =='' or info == None:
          empty_value = True
+
+   if not sent_file:   
+      if not empty_value: 
+         myconnection.add_to_database_persoane(nume ,prenume ,companie ,id_manager ,email)        
+         message = "Datele au fost introduse cu succes!"
       else:
-         print(info)
+         message = 'Va rog completati toate campurile!'
+   else:
+      #aici iau continutul fisierului introdus in formular si creez un fisier in directorul backup intrari in care 
+      #pun informatiile din fisierul introdus in formlular.Codul e conceput in asa fel incat fisierul se va suprascrie
+      #de fiecare data
+      try :
+         new_file_content = json.load(sent_file)
+         new_file = ABSOLUTE_PATH_BACKUP_INTRARI +"\\"+ "Poarta3_backup.json"
+         with open(new_file,'w') as online_file:
+            json.dump(new_file_content,online_file)
          
-   if not empty_value: 
-      myconnection.add_to_database_persoane(nume ,prenume ,companie ,id_manager ,email)        
-      empty_value = not empty_value
-
-   #aici iau continutul fisierului introdus in formular si creez un fisier in directorul backup intrari in care 
-   #pun informatiile din fisierul introdus in formlular.Codul e conceput in asa fel incat fisierul se va suprascrie
-   #de fiecare data
-   try :
-      new_file_content = json.load(sent_file)
-      new_file = ABSOLUTE_PATH_BACKUP_INTRARI +"\\"+ "Poarta3.json"
-      with open(new_file,'w') as online_file:
-         json.dump(new_file_content,online_file)
+         message = myconnection.add_to_database_acces(new_file)
+      except UnicodeDecodeError:
+         message = "Formatul fisierului nu este acceptat"
+      except JSONDecodeError:
+         message = "Formatul fisierului nu este corect!"
       
-      myconnection.add_to_database_acces(new_file)
-   except JSONDecodeError:
-      print("Ceva nu a mers bine")
    
-   return home()
+   return home(message)
 
-def onilne_flask_app():
+if __name__ == "__main__":
    app.run(debug = True)
-
-# ai reusit cu log in acum organizeaza pe aici 
-onilne_flask_app() 
-# contionua cu requesturile pe flask si fa cumva sa bagi asta la tine in aplicatie ca o sa fie nevoie 

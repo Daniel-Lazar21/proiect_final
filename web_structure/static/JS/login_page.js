@@ -15,7 +15,7 @@ button_pws.onclick = function(){
     }
     else{
         password.type = "password";
-        ball.style = "transform: translateX(-5%); \
+        ball.style = "transform: translateX(0); \
                       transition:0.5s;";
         button_pws.style = "border-color:yellowgreen;\
                             transition:0.5s";
@@ -23,3 +23,9 @@ button_pws.onclick = function(){
 }
 //termina ce ai de facut la animatie si parola
 // in online.py fa sa dai dispay cu html daca nu sunt toate campurile completate
+// fa in asa fel incat box urile sa se mareasca la click pt ca altfel vei avea un bug =]]]
+function preventBack() { 
+    window.history.forward();  
+} 
+setTimeout("preventBack()", 0);  
+window.onunload = function () { null }; 
