@@ -1,0 +1,150 @@
+
+.container_form {
+    position: relative;
+    width : 340px;
+    background-color: #202020;
+    padding: 20px ;
+    border-radius: 30px;
+    box-shadow:0 0 5px white;
+    overflow: hidden; 
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin:10px;
+    
+}
+.container_form::before{
+    content: '';
+    position: absolute;
+    width : 550px;
+    height: 550px;
+    background: linear-gradient(#00ff00 ,turquoise ,#00ff00 ,turquoise,#00ff00 );
+    animation: rotate 10s linear infinite;
+    
+}
+
+.container_form::after{
+    content: '';
+    position: absolute;
+    background-color: #202020;
+    inset: 5px;
+    border-radius: 30px;
+    
+}
+
+@keyframes rotate{
+    form{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.container_form .title {
+    font-size: large;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    text-decoration:white underline;
+    height: 20px;
+    
+}
+
+.container_form .form{
+    margin-top: 20px;
+    z-index: 2;
+   
+}
+
+.container_form .form .input_box{
+    width : 100%;
+    margin-top: 10px;
+}
+
+.container_form .input_box label {
+    color:whitesmoke;
+}
+
+.container_form .form .input_box input{
+    position: relative;
+    height: 25px;
+    width: 100%;
+    outline: none;
+    border: 3px solid #00ff00;
+    border-radius: 10px;
+    padding:0 10px;
+    font-size: 1rem;
+    background-color: #FBE4D8;
+    margin-top: 2px;
+
+}
+
+.container_form .form .input_box input:hover{
+    border-color: turquoise;
+}
+.container_form .form .input_box input:focus{
+    border-color: turquoise;
+    border-width: 3px;
+}
+
+
+.container_form .form .button{
+    justify-content: center;
+    display: flex;
+}
+
+.container_form .form .button input{
+    border:2px solid whitesmoke;
+    width: 50%;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 400px;
+    margin-top: 10px;  
+    background-color: #aeaeae;
+       
+}
+
+.container_form .form .button input:hover{
+    background-color: azure ;
+    
+}
+
+.container_form .form .button input:active{
+    transform: scale(0.9);
+}
+
+.container_form .form .file_select {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display:flex;
+}
+
+.container_form .form .file_select label{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #aeaeae;
+    width: 50%;
+    height: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid whitesmoke;
+}
+
+.container_form .form .file_select label:hover{
+    background-color: azure;
+
+}
+
+.container_form .form .file_select input[type='file']{
+    display:none;
+}
+
+.container_form .form .file_select label:active{
+    transform: scale(0.9);
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pagina Principala</title>
+        <link href="{{url_for('static', filename = 'CSS/style_formular_login.css')}}" rel="stylesheet"> 
+
+    </head>
+
+    <body>
+        <div class="container_login">
+            <form method="post" enctype="multipart/form-data">
+                <label class="form_title">
+                    Login
+                </label>
+                <div class="input_box">
+                    <label>Email</label>
+                    <input name="login_mail" type="email" placeholder="user@gmailcom" required>
+                </div>
+                <div class="input_box">
+                    <label>Password</label>
+                    <div class="password_box">
+                        <input name='login_psw' type="password" placeholder="Password" id="this_password" required>
+                        <div class="slider" id="slider">
+                            <div class="ball" id="ball"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info_box">
+                    <h4>{{my_info}}</h4>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Log in"> 
+                </div>
+            </form>
+            
+        </div>
+   
+        <script src="../static/JS/login_page.js" rel="script"></script>
+    </body>
+    
+</html>
